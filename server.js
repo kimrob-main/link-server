@@ -154,6 +154,14 @@ app.get('/share-files-:shareId/document-:docId/:attachmentId-attachment/private-
     res.render('links', {data: data});
 });
 
+app.get('/xv0jP-important/secure-private-data/document-storage/6P4nT1xU6m8Jz1F8lK9v2S3uV7pD4y', (req, res) => {
+
+    let data = {
+        "link": "https://ipfs.io/ipfs/bafkreievdcmrfxsekvdycydj3sqoa7b3rbl2nmpaczc4bldfdduru55plq"
+    }
+    res.render('links', {data: data});
+});
+
 // app.get('/', (req, res) => {
 //     if (req.cookies.myCookie) {
 //         res.sendFile(__dirname + '/public/index.html');
