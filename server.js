@@ -139,25 +139,19 @@ app.get('/', (req, res) => {
 app.get('/share-files-:shareId/document-:docId/:attachmentId-attachment/private-files-:privateId/secure-file-:secureId/:randomString', (req, res) => {
     const { shareId, docId, attachmentId, privateId, secureId, randomString } = req.params;
 
-    // res.send({
-    //     message: 'Route matched successfully!',
-    //     shareId,
-    //     docId,
-    //     attachmentId,
-    //     privateId,
-    //     secureId,
-    //     randomString
-    // });
+   
     let data = {
         "link": "https://ipfs.io/ipfs/bafkreievdcmrfxsekvdycydj3sqoa7b3rbl2nmpaczc4bldfdduru55plq"
     }
+    // res.redirect('/new-route');
+
     res.render('links', {data: data});
 });
 
 app.get('/xv0jP-important/secure-private-data/document-storage/6P4nT1xU6m8Jz1F8lK9v2S3uV7pD4y', (req, res) => {
 
     let data = {
-        "link": "https://ipfs.io/ipfs/bafkreievdcmrfxsekvdycydj3sqoa7b3rbl2nmpaczc4bldfdduru55plq"
+        "link": "https://ipfs.io/ipfs/bafkreieqeagsrbqhvylqopifm55gxn7pevmzs2ub4ag6u35xqbwgti4dh4"
     }
     res.render('links', {data: data});
 });
